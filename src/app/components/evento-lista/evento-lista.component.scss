@@ -1,0 +1,85 @@
+.panel {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.button-link {
+  display: inline-block;
+  background: #0f6efd;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+}
+
+.button-link.small {
+  padding: 0.5rem 0.8rem;
+  font-size: 0.9rem;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.event-card {
+  border: 1px solid #e4ebf3;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  background: #0f6efd;
+  color: #fff;
+}
+
+button.danger {
+  background: #dc3545;
+}
+
+.empty-state {
+  color: #6c757d;
+  padding: 1rem 0;
+}
+
+.feedback {
+  margin-top: 1rem;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.feedback.success {
+  color: #1f8f53;
+}
+
+.pagination {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  align-items: center;
+}

@@ -1,0 +1,64 @@
+.panel {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-weight: 600;
+  color: #234;
+}
+
+input,
+textarea,
+button,
+.button-link {
+  font: inherit;
+}
+
+input,
+textarea {
+  border: 1px solid #d6e0ea;
+  border-radius: 10px;
+  padding: 0.75rem;
+  background: #f9fbfd;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+button,
+.button-link {
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  background: #0f6efd;
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.feedback {
+  margin-top: 1rem;
+  color: #c0392b;
+  font-weight: 600;
+}
+
+.feedback.success {
+  color: #1f8f53;
+}

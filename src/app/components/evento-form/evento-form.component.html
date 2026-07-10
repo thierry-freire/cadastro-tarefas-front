@@ -1,0 +1,36 @@
+<section class="panel form-panel">
+  <h1>{{ isEditing ? 'Editar evento' : 'Cadastrar evento' }}</h1>
+  <p>{{ isEditing ? 'Atualize os dados do evento.' : 'Preencha os dados para criar um novo evento.' }}</p>
+
+  <form (ngSubmit)="onSubmit()" #eventoFormRef="ngForm">
+    <label>
+      Título
+      <input [(ngModel)]="eventoForm.titulo" name="titulo" required />
+    </label>
+
+    <label>
+      Descrição
+      <textarea [(ngModel)]="eventoForm.descricao" name="descricao" rows="4" required></textarea>
+    </label>
+
+    <label>
+      Data e hora
+      <input type="datetime-local" [(ngModel)]="eventoForm.data" name="data" required />
+    </label>
+
+    <label>
+      Local
+      <input [(ngModel)]="eventoForm.local" name="local" required />
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="loading">
+        {{ isEditing ? 'Salvar alterações' : 'Cadastrar evento' }}
+      </button>
+      <a routerLink="/" class="button-link">Voltar</a>
+    </div>
+  </form>
+
+  <div class="feedback" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="feedback success" *ngIf="successMessage">{{ successMessage }}</div>
+</section>
