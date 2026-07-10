@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -15,12 +15,12 @@ import { Evento } from '../../models/evento';
 @Component({
   selector: 'app-evento-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
   templateUrl: './evento-form.component.html',
   styleUrl: './evento-form.component.scss'
 })
 export class EventoFormComponent implements OnInit {
-  eventoForm: Evento = this.createEmptyEvento();
+  form!: FormGroup;
   isEditing = false;
   loading = false;
   errorMessage = '';
@@ -29,10 +29,19 @@ export class EventoFormComponent implements OnInit {
   constructor(
     private eventoService: EventoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      id: [null],
+      titulo: ['', Validators.required],
+      descricao: ['', Validators.required],
+      data: ['', Validators.required],
+      local: ['', Validators.required]
+    });
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditing = true;
@@ -41,7 +50,8 @@ export class EventoFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    if (!this.eventoForm.titulo || !this.eventoForm.descricao || !this.eventoForm.data || !this.eventoForm.local) {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       this.errorMessage = 'Preencha todos os campos.';
       return;
     }
@@ -50,14 +60,15 @@ export class EventoFormComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const request = this.isEditing && this.eventoForm.id != null
-      ? this.eventoService.update(this.eventoForm.id, this.eventoForm)
-      : this.eventoService.create(this.eventoForm);
+    const evento: Evento = this.form.value;
+    const request = this.isEditing && evento.id != null
+      ? this.eventoService.update(evento.id, evento)
+      : this.eventoService.create(evento);
 
     request.subscribe({
       next: () => {
         this.successMessage = this.isEditing ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.';
-        this.router.navigate(['/'], { queryParams: { success: this.successMessage } });
+        this.router.navigate(['/events'], { queryParams: { success: this.successMessage } });
       },
       error: () => {
         this.errorMessage = 'Não foi possível salvar o evento.';
@@ -70,7 +81,10 @@ export class EventoFormComponent implements OnInit {
     this.loading = true;
     this.eventoService.getById(id).subscribe({
       next: (evento) => {
-        this.eventoForm = { ...evento, data: this.formatDateForInput(evento.data) };
+        this.form.patchValue({
+          ...evento,
+          data: this.formatDateForInput(evento.data)
+        });
         this.loading = false;
       },
       error: () => {
@@ -78,15 +92,6 @@ export class EventoFormComponent implements OnInit {
         this.loading = false;
       }
     });
-  }
-
-  private createEmptyEvento(): Evento {
-    return {
-      titulo: '',
-      descricao: '',
-      data: '',
-      local: ''
-    };
   }
 
   private formatDateForInput(value: string): string {

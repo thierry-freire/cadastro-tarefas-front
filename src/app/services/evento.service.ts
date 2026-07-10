@@ -7,9 +7,14 @@ import { Evento, EventoPageResponse } from '../models/evento';
   providedIn: 'root'
 })
 export class EventoService {
-  private readonly apiUrl = 'http://localhost:8080/api/events';
+  private readonly apiUrl = this.getApiUrl();
 
   constructor(private http: HttpClient) {}
+
+  private getApiUrl(): string {
+    const envApiUrl = (window as any)?.__ENV__?.API_URL;
+    return envApiUrl || 'http://localhost:8080/api/events';
+  }
 
   list(page: number = 0, size: number = 10): Observable<EventoPageResponse> {
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString());

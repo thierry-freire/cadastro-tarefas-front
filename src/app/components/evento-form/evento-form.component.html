@@ -16,25 +16,25 @@
       <span>{{ isEditing ? 'Carregando evento...' : 'Salvando evento...' }}</span>
     </div>
 
-    <form (ngSubmit)="onSubmit()" #eventoFormRef="ngForm" class="event-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="event-form">
       <mat-form-field appearance="outline">
         <mat-label>Título</mat-label>
-        <input matInput [(ngModel)]="eventoForm.titulo" name="titulo" required />
+        <input matInput formControlName="titulo" required />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Descrição</mat-label>
-        <textarea matInput [(ngModel)]="eventoForm.descricao" name="descricao" rows="4" required></textarea>
+        <textarea matInput formControlName="descricao" rows="4" required></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Data e hora</mat-label>
-        <input matInput type="datetime-local" [(ngModel)]="eventoForm.data" name="data" required />
+        <input matInput type="datetime-local" formControlName="data" required />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Local</mat-label>
-        <input matInput [(ngModel)]="eventoForm.local" name="local" required />
+        <input matInput formControlName="local" required />
       </mat-form-field>
 
       <div class="actions">
