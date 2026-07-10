@@ -1,36 +1,52 @@
-<section class="panel list-panel">
-  <div class="list-header">
-    <h2>Eventos cadastrados</h2>
-    <a routerLink="/events/new" class="button-link">Novo evento</a>
-  </div>
-
-  <div *ngIf="loading" class="spinner" role="status" aria-live="polite">
-    <span class="spinner-circle"></span>
-    <span>Carregando eventos...</span>
-  </div>
-
-  <div *ngIf="!loading && eventos.length === 0" class="empty-state">Nenhum evento cadastrado ainda.</div>
-
-  <div *ngIf="!loading && eventos.length > 0" class="event-list">
-    <article class="event-card" *ngFor="let evento of eventos">
-      <div>
-        <h3>{{ evento.titulo }}</h3>
-        <p>{{ evento.descricao }}</p>
-        <small>{{ evento.local }} • {{ evento.data | date:'dd/MM/yyyy HH:mm' }}</small>
+<section class="page-shell">
+  <mat-card class="hero-card">
+    <mat-toolbar color="primary" class="toolbar">
+      <div class="side"></div>
+      <span>Gestão de Eventos</span>
+      <div class="side">
+        <button mat-flat-button color="accent" routerLink="/events/new">
+          <mat-icon>add</mat-icon>
+          Novo evento
+        </button>
       </div>
-      <div class="card-actions">
-        <a class="button-link small" [routerLink]="['/events', evento.id]">Editar</a>
-        <button type="button" class="danger" (click)="deleteEvento(evento.id)">Excluir</button>
+    </mat-toolbar>
+
+    <div class="content-card">
+      <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Carregando eventos...</span>
       </div>
-    </article>
-  </div>
 
-  <div class="pagination" *ngIf="totalPages > 1">
-    <button type="button" (click)="changePage(-1)" [disabled]="page === 0">Anterior</button>
-    <span>Página {{ page + 1 }} de {{ totalPages }}</span>
-    <button type="button" (click)="changePage(1)" [disabled]="page + 1 >= totalPages">Próxima</button>
-  </div>
+      <div *ngIf="!loading && eventos.length === 0" class="empty-state">
+        <mat-icon>event_available</mat-icon>
+        <p>Nenhum evento cadastrado ainda.</p>
+      </div>
 
-  <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
-  <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+      <div *ngIf="!loading && eventos.length > 0" class="event-list">
+        <mat-card *ngFor="let evento of eventos" class="event-card">
+          <div class="event-info">
+            <h3>{{ evento.titulo }}</h3>
+            <p>{{ evento.descricao }}</p>
+            <mat-chip-set>
+              <mat-chip>{{ evento.local }}</mat-chip>
+              <mat-chip>{{ evento.data | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
+            </mat-chip-set>
+          </div>
+          <div class="card-actions">
+            <a mat-stroked-button color="primary" [routerLink]="['/events', evento.id, 'edit']">Editar</a>
+            <button mat-flat-button color="warn" type="button" (click)="deleteEvento(evento.id)">Excluir</button>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="pagination">
+        <button mat-stroked-button (click)="changePage(-1)" [disabled]="page === 0">Anterior</button>
+        <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+        <button mat-stroked-button (click)="changePage(1)" [disabled]="page + 1 >= totalPages">Próxima</button>
+      </div>
+
+      <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+      <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+    </div>
+  </mat-card>
 </section>

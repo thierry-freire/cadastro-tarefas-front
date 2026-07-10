@@ -17,7 +17,7 @@ export const routes: Routes = [
     component: EventoFormComponent
   },
   {
-    path: 'events/:id',
+    path: 'events/:id/edit',
     component: EventoFormComponent
   }
 ];

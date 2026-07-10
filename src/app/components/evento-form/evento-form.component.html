@@ -1,41 +1,50 @@
-<section class="panel form-panel">
-  <h1>{{ isEditing ? 'Editar evento' : 'Cadastrar evento' }}</h1>
-  <p>{{ isEditing ? 'Atualize os dados do evento.' : 'Preencha os dados para criar um novo evento.' }}</p>
-
-  <div *ngIf="loading" class="spinner" role="status" aria-live="polite">
-    <span class="spinner-circle"></span>
-    <span>{{ isEditing ? 'Carregando evento...' : 'Salvando evento...' }}</span>
-  </div>
-
-  <form (ngSubmit)="onSubmit()" #eventoFormRef="ngForm">
-    <label>
-      Título
-      <input [(ngModel)]="eventoForm.titulo" name="titulo" required />
-    </label>
-
-    <label>
-      Descrição
-      <textarea [(ngModel)]="eventoForm.descricao" name="descricao" rows="4" required></textarea>
-    </label>
-
-    <label>
-      Data e hora
-      <input type="datetime-local" [(ngModel)]="eventoForm.data" name="data" required />
-    </label>
-
-    <label>
-      Local
-      <input [(ngModel)]="eventoForm.local" name="local" required />
-    </label>
-
-    <div class="actions">
-      <button type="submit" [disabled]="loading">
-        {{ isEditing ? 'Salvar alterações' : 'Cadastrar evento' }}
+<section class="page-shell">
+  <mat-card class="form-card">
+    <div class="form-header">
+      <div>
+        <h1>{{ isEditing ? 'Editar evento' : 'Cadastrar evento' }}</h1>
+        <p>{{ isEditing ? 'Atualize os dados do evento.' : 'Preencha os dados para criar um novo evento.' }}</p>
+      </div>
+      <button mat-stroked-button color="primary" routerLink="/">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
       </button>
-      <a routerLink="/" class="button-link">Voltar</a>
     </div>
-  </form>
 
-  <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
-  <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+    <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>{{ isEditing ? 'Carregando evento...' : 'Salvando evento...' }}</span>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" #eventoFormRef="ngForm" class="event-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput [(ngModel)]="eventoForm.titulo" name="titulo" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput [(ngModel)]="eventoForm.descricao" name="descricao" rows="4" required></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data e hora</mat-label>
+        <input matInput type="datetime-local" [(ngModel)]="eventoForm.data" name="data" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Local</mat-label>
+        <input matInput [(ngModel)]="eventoForm.local" name="local" required />
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+          {{ isEditing ? 'Salvar alterações' : 'Cadastrar evento' }}
+        </button>
+      </div>
+    </form>
+
+    <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+    <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+  </mat-card>
 </section>
