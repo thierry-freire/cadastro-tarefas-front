@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { EventoService } from '../../services/evento.service';
 import { Evento } from '../../models/evento';
 
@@ -21,10 +21,20 @@ export class EventoListaComponent implements OnInit {
   totalPages = 0;
   totalElements = 0;
 
-  constructor(private eventoService: EventoService) {}
+  constructor(
+    private eventoService: EventoService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.loadEventos();
+    this.route.queryParamMap.subscribe((params) => {
+      const success = params.get('success');
+      const error = params.get('error');
+
+      this.successMessage = success ?? '';
+      this.errorMessage = error ?? '';
+      this.loadEventos();
+    });
   }
 
   loadEventos(): void {

@@ -55,10 +55,40 @@ button,
 
 .feedback {
   margin-top: 1rem;
-  color: #c0392b;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
   font-weight: 600;
 }
 
-.feedback.success {
-  color: #1f8f53;
+.feedback-error {
+  color: #b42318;
+  background: #fef3f2;
+}
+
+.feedback-success {
+  color: #067647;
+  background: #ecfdf3;
+}
+
+.spinner {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  color: #475467;
+}
+
+.spinner-circle {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #d0d5dd;
+  border-top-color: #0f6efd;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

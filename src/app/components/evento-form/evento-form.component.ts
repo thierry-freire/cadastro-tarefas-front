@@ -50,7 +50,7 @@ export class EventoFormComponent implements OnInit {
     request.subscribe({
       next: () => {
         this.successMessage = this.isEditing ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.';
-        this.router.navigate(['/']);
+        this.router.navigate(['/'], { queryParams: { success: this.successMessage } });
       },
       error: () => {
         this.errorMessage = 'Não foi possível salvar o evento.';

@@ -2,6 +2,11 @@
   <h1>{{ isEditing ? 'Editar evento' : 'Cadastrar evento' }}</h1>
   <p>{{ isEditing ? 'Atualize os dados do evento.' : 'Preencha os dados para criar um novo evento.' }}</p>
 
+  <div *ngIf="loading" class="spinner" role="status" aria-live="polite">
+    <span class="spinner-circle"></span>
+    <span>{{ isEditing ? 'Carregando evento...' : 'Salvando evento...' }}</span>
+  </div>
+
   <form (ngSubmit)="onSubmit()" #eventoFormRef="ngForm">
     <label>
       Título
@@ -31,6 +36,6 @@
     </div>
   </form>
 
-  <div class="feedback" *ngIf="errorMessage">{{ errorMessage }}</div>
-  <div class="feedback success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+  <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
 </section>

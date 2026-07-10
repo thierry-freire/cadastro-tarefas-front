@@ -4,7 +4,11 @@
     <a routerLink="/events/new" class="button-link">Novo evento</a>
   </div>
 
-  <div *ngIf="loading" class="empty-state">Carregando...</div>
+  <div *ngIf="loading" class="spinner" role="status" aria-live="polite">
+    <span class="spinner-circle"></span>
+    <span>Carregando eventos...</span>
+  </div>
+
   <div *ngIf="!loading && eventos.length === 0" class="empty-state">Nenhum evento cadastrado ainda.</div>
 
   <div *ngIf="!loading && eventos.length > 0" class="event-list">
@@ -27,6 +31,6 @@
     <button type="button" (click)="changePage(1)" [disabled]="page + 1 >= totalPages">Próxima</button>
   </div>
 
-  <div class="feedback" *ngIf="errorMessage">{{ errorMessage }}</div>
-  <div class="feedback success" *ngIf="successMessage">{{ successMessage }}</div>
+  <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+  <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
 </section>
