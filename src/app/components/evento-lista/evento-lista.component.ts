@@ -23,7 +23,7 @@ export class EventoListaComponent implements OnInit {
   errorMessage = '';
   successMessage = '';
   page = 0;
-  pageSize = 10;
+  pageSize = 5;
   totalPages = 0;
   totalElements = 0;
 

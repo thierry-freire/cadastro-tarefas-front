@@ -26,14 +26,11 @@
         <mat-card *ngFor="let evento of eventos" class="event-card">
           <div class="event-info">
             <h3>{{ evento.titulo }}</h3>
-            <p>{{ evento.descricao }}</p>
-            <mat-chip-set>
-              <mat-chip>{{ evento.local }}</mat-chip>
-              <mat-chip>{{ evento.data | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
-            </mat-chip-set>
+            <p>{{ evento.data | date:'dd/MM/yyyy HH:mm' }}</p>
           </div>
           <div class="card-actions">
-            <a mat-stroked-button color="primary" [routerLink]="['/events', evento.id, 'edit']">Editar</a>
+            <a mat-stroked-button color="primary" [routerLink]="['/events', evento.id]">Detalhes</a>
+            <a mat-stroked-button color="accent" [routerLink]="['/events', evento.id, 'edit']">Editar</a>
             <button mat-flat-button color="warn" type="button" (click)="deleteEvento(evento.id)">Excluir</button>
           </div>
         </mat-card>
