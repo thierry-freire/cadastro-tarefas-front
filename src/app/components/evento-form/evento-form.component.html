@@ -19,12 +19,12 @@
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="event-form">
       <mat-form-field appearance="outline">
         <mat-label>Título</mat-label>
-        <input matInput formControlName="titulo" required />
+        <input matInput formControlName="titulo" maxlength="100" required />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Descrição</mat-label>
-        <textarea matInput formControlName="descricao" rows="4" required></textarea>
+        <textarea matInput formControlName="descricao" rows="4" maxlength="1000" required></textarea>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -34,7 +34,7 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Local</mat-label>
-        <input matInput formControlName="local" required />
+        <input matInput formControlName="local" maxlength="200" required />
       </mat-form-field>
 
       <div class="actions">

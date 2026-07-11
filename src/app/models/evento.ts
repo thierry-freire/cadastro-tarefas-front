@@ -13,3 +13,10 @@ export interface EventoPageResponse {
   size: number;
   number: number;
 }
+
+export interface ErroResponse {
+  titulo: string;
+  descricao: string;
+  data: string;
+  local: string;
+}
