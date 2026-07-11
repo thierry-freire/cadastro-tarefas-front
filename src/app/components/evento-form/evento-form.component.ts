@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EventoService } from '../../services/evento.service';
 import { Evento } from '../../models/evento';
+import { ErroResponse } from '../../models/evento';
 
 @Component({
   selector: 'app-evento-form',
@@ -70,8 +71,12 @@ export class EventoFormComponent implements OnInit {
         this.successMessage = this.isEditing ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.';
         this.router.navigate(['/events'], { queryParams: { success: this.successMessage } });
       },
-      error: () => {
-        this.errorMessage = 'Não foi possível salvar o evento.';
+      error: (response) => {
+        let errorMessages: ErroResponse = response.error;
+        this.errorMessage = errorMessages.titulo ? `Título: ${errorMessages.titulo}\n` : '';
+        this.errorMessage += errorMessages.descricao ? `Descrição: ${errorMessages.descricao}\n` : '';
+        this.errorMessage += errorMessages.data ? `Data: ${errorMessages.data}\n` : '';
+        this.errorMessage += errorMessages.local ? `Local: ${errorMessages.local}\n` : '';
         this.loading = false;
       }
     });
