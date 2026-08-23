@@ -9,18 +9,18 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { EventoService } from '../../services/evento.service';
-import { Evento } from '../../models/evento';
-import { ErroResponse } from '../../models/evento';
+import { TarefaService } from '../../services/tarefa.service';
+import { Tarefa } from '../../models/tarefa';
+import { ErroResponse } from '../../models/tarefa';
 
 @Component({
-  selector: 'app-evento-form',
+  selector: 'app-tarefa-form',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
-  templateUrl: './evento-form.component.html',
-  styleUrl: './evento-form.component.scss'
+  templateUrl: './tarefa-form.component.html',
+  styleUrl: './tarefa-form.component.scss'
 })
-export class EventoFormComponent implements OnInit {
+export class TarefaFormComponent implements OnInit {
   form!: FormGroup;
   isEditing = false;
   loading = false;
@@ -28,7 +28,7 @@ export class EventoFormComponent implements OnInit {
   successMessage = '';
 
   constructor(
-    private eventoService: EventoService,
+    private tarefaService: TarefaService,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder
@@ -46,7 +46,7 @@ export class EventoFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditing = true;
-      this.loadEvento(Number(id));
+      this.loadTarefa(Number(id));
     }
   }
 
@@ -61,39 +61,39 @@ export class EventoFormComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const evento: Evento = this.form.value;
-    const request = this.isEditing && evento.id != null
-      ? this.eventoService.update(evento.id, evento)
-      : this.eventoService.create(evento);
+    const tarefa: Tarefa = this.form.value;
+    const request = this.isEditing && tarefa.id != null
+      ? this.tarefaService.update(tarefa.id, tarefa)
+      : this.tarefaService.create(tarefa);
 
     request.subscribe({
       next: () => {
-        this.successMessage = this.isEditing ? 'Evento atualizado com sucesso.' : 'Evento cadastrado com sucesso.';
-        this.router.navigate(['/events'], { queryParams: { success: this.successMessage } });
+        this.successMessage = this.isEditing ? 'Tarefa atualizada com sucesso.' : 'Tarefa cadastrada com sucesso.';
+        this.router.navigate(['/tasks'], { queryParams: { success: this.successMessage } });
       },
       error: (response) => {
         let errorMessages: ErroResponse = response.error;
-        this.errorMessage = errorMessages.titulo ? `Título: ${errorMessages.titulo}\n` : '';
-        this.errorMessage += errorMessages.descricao ? `Descrição: ${errorMessages.descricao}\n` : '';
-        this.errorMessage += errorMessages.data ? `Data: ${errorMessages.data}\n` : '';
-        this.errorMessage += errorMessages.local ? `Local: ${errorMessages.local}\n` : '';
+        this.errorMessage = errorMessages.error ? `Error: ${errorMessages.error}\n` : '';
+        this.errorMessage += errorMessages.path ? `Caminho: ${errorMessages.path}\n` : '';
+        this.errorMessage += errorMessages.message ? `Descrição: ${errorMessages.message}\n` : '';
+        this.errorMessage += errorMessages.status ? `Status: ${errorMessages.status}\n` : '';
         this.loading = false;
       }
     });
   }
 
-  private loadEvento(id: number): void {
+  private loadTarefa(id: number): void {
     this.loading = true;
-    this.eventoService.getById(id).subscribe({
-      next: (evento) => {
+    this.tarefaService.getById(id).subscribe({
+      next: (tarefa) => {
         this.form.patchValue({
-          ...evento,
-          data: this.formatDateForInput(evento.data)
+          ...tarefa,
+          data: this.formatDateForInput(tarefa.dataCriacao.toString())
         });
         this.loading = false;
       },
       error: () => {
-        this.errorMessage = 'Não foi possível carregar o evento.';
+        this.errorMessage = 'Não foi possível carregar a tarefa.';
         this.loading = false;
       }
     });

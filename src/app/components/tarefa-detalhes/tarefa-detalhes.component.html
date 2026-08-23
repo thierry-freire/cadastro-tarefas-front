@@ -2,8 +2,8 @@
   <mat-card class="detail-card">
     <mat-toolbar color="primary" class="toolbar">
       <div>
-        <h1>Detalhes do evento</h1>
-        <p>Veja as informações completas do evento selecionado.</p>
+        <h1>Detalhes da tarefa</h1>
+        <p>Veja as informações completas da tarefa selecionada.</p>
       </div>
       <button mat-flat-button color="accent" routerLink="/events">
         <mat-icon>arrow_back</mat-icon>
@@ -18,21 +18,22 @@
 
     <div *ngIf="errorMessage" class="feedback feedback-error" role="alert">{{ errorMessage }}</div>
 
-    <div *ngIf="evento && !loading" class="detail-content">
-      <h2>{{ evento.titulo }}</h2>
-      <p class="description">{{ evento.descricao }}</p>
+    <div *ngIf="tarefa && !loading" class="detail-content">
+      <h2>{{ tarefa.titulo }}</h2>
+      <p class="description">{{ tarefa.descricao }}</p>
+      <mat-chip>{{ tarefa.status }}</mat-chip>
 
       <mat-chip-set>
-        <mat-chip>{{ evento.local }}</mat-chip>
-        <mat-chip>{{ evento.data | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
+        <mat-chip>{{ tarefa.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
+        <mat-chip>{{ tarefa.dataConclusao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
       </mat-chip-set>
 
       <div class="actions">
-        <a mat-flat-button color="primary" [routerLink]="['/events', evento.id, 'edit']">
+        <a mat-flat-button color="primary" [routerLink]="['/events', tarefa.id, 'edit']">
           <mat-icon>edit</mat-icon>
           Editar
         </a>
-        <button mat-flat-button color="warn" type="button" (click)="deleteEvento(evento.id)">Excluir</button>
+        <button mat-flat-button color="warn" type="button" (click)="deleteTarefa(tarefa.id)">Excluir</button>
       </div>
     </div>
   </mat-card>

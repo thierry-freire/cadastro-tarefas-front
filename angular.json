@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "desafio-petrobras-front-end": {
+    "cadastro-tarefas-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/desafio-petrobras-front-end",
+            "outputPath": "dist/cadastro-tarefas-front",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [

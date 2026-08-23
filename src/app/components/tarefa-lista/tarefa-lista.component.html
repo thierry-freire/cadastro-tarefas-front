@@ -2,11 +2,11 @@
   <mat-card class="hero-card">
     <mat-toolbar color="primary" class="toolbar">
       <div class="side"></div>
-      <span>Gestão de Eventos</span>
+      <span>Gestão de Tarefas</span>
       <div class="side">
-        <button mat-flat-button color="accent" routerLink="/events/new">
+        <button mat-flat-button color="accent" routerLink="/tasks/new">
           <mat-icon>add</mat-icon>
-          Novo evento
+          Nova tarefa
         </button>
       </div>
     </mat-toolbar>
@@ -14,24 +14,24 @@
     <div class="content-card">
       <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
         <mat-spinner diameter="32"></mat-spinner>
-        <span>Carregando eventos...</span>
+        <span>Carregando tarefas...</span>
       </div>
 
-      <div *ngIf="!loading && eventos.length === 0" class="empty-state">
+      <div *ngIf="!loading && tarefas.length === 0" class="empty-state">
         <mat-icon>event_available</mat-icon>
-        <p>Nenhum evento cadastrado ainda.</p>
+        <p>Nenhuma tarefa cadastrada ainda.</p>
       </div>
 
-      <div *ngIf="!loading && eventos.length > 0" class="event-list">
-        <mat-card *ngFor="let evento of eventos" class="event-card">
+      <div *ngIf="!loading && tarefas.length > 0" class="event-list">
+        <mat-card *ngFor="let tarefa of tarefas" class="event-card">
           <div class="event-info">
-            <h3>{{ evento.titulo }}</h3>
-            <p>{{ evento.data | date:'dd/MM/yyyy HH:mm' }}</p>
+            <h3>{{ tarefa.titulo }}</h3>
+            <p>{{ tarefa.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</p>
           </div>
           <div class="card-actions">
-            <a mat-stroked-button color="primary" [routerLink]="['/events', evento.id]">Detalhes</a>
-            <a mat-stroked-button color="accent" [routerLink]="['/events', evento.id, 'edit']">Editar</a>
-            <button mat-flat-button color="warn" type="button" (click)="deleteEvento(evento.id)">Excluir</button>
+            <a mat-stroked-button color="primary" [routerLink]="['/tasks', tarefa.id]">Detalhes</a>
+            <a mat-stroked-button color="accent" [routerLink]="['/tasks', tarefa.id, 'edit']">Editar</a>
+            <button mat-flat-button color="warn" type="button" (click)="deleteTarefa(tarefa.id)">Excluir</button>
           </div>
         </mat-card>
       </div>

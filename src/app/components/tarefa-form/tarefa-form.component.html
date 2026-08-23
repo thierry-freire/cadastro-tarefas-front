@@ -2,8 +2,8 @@
   <mat-card class="form-card">
     <div class="form-header">
       <div>
-        <h1>{{ isEditing ? 'Editar evento' : 'Cadastrar evento' }}</h1>
-        <p>{{ isEditing ? 'Atualize os dados do evento.' : 'Preencha os dados para criar um novo evento.' }}</p>
+        <h1>{{ isEditing ? 'Editar tarefa' : 'Cadastrar tarefa' }}</h1>
+        <p>{{ isEditing ? 'Atualize os dados da tarefa.' : 'Preencha os dados para criar uma nova tarefa.' }}</p>
       </div>
       <button mat-stroked-button color="primary" routerLink="/">
         <mat-icon>arrow_back</mat-icon>
@@ -13,7 +13,7 @@
 
     <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
       <mat-spinner diameter="28"></mat-spinner>
-      <span>{{ isEditing ? 'Carregando evento...' : 'Salvando evento...' }}</span>
+      <span>{{ isEditing ? 'Carregando tarefa...' : 'Salvando tarefa...' }}</span>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="event-form">
@@ -39,7 +39,7 @@
 
       <div class="actions">
         <button mat-flat-button color="primary" type="submit" [disabled]="loading">
-          {{ isEditing ? 'Salvar alterações' : 'Cadastrar evento' }}
+          {{ isEditing ? 'Salvar alterações' : 'Cadastrar tarefa' }}
         </button>
       </div>
     </form>

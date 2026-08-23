@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { EventoListaComponent } from './components/evento-lista/evento-lista.component';
-import { EventoFormComponent } from './components/evento-form/evento-form.component';
-import { EventoDetalhesComponent } from './components/evento-detalhes/evento-detalhes.component';
+import { TarefaListaComponent } from './components/tarefa-lista/tarefa-lista.component';
+import { TarefaFormComponent } from './components/tarefa-form/tarefa-form.component';
+import { TarefaDetalhesComponent } from './components/tarefa-detalhes/tarefa-detalhes.component';
 
 export const routes: Routes = [
   {
@@ -11,18 +11,18 @@ export const routes: Routes = [
   },
   {
     path: 'events',
-    component: EventoListaComponent
+    component: TarefaListaComponent
   },
   {
     path: 'events/new',
-    component: EventoFormComponent
+    component: TarefaFormComponent
   },
   {
     path: 'events/:id',
-    component: EventoDetalhesComponent
+    component: TarefaDetalhesComponent
   },
   {
     path: 'events/:id/edit',
-    component: EventoFormComponent
+    component: TarefaFormComponent
   }
 ];
