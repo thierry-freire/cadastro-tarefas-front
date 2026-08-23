@@ -21,7 +21,7 @@
     <div *ngIf="tarefa && !loading" class="detail-content">
       <h2>{{ tarefa.titulo }}</h2>
       <p class="description">{{ tarefa.descricao }}</p>
-      <mat-chip>{{ tarefa.status }}</mat-chip>
+      <mat-chip>{{ tarefa.status === 'EM_ANDAMENTO' ? 'EM ANDAMENTO' : tarefa.status === 'CONCLUIDA' ? 'CONCLUÍDA' : tarefa.status }}</mat-chip>
 
       <mat-chip-set>
         <mat-chip>{{ tarefa.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>

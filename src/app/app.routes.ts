@@ -3,6 +3,7 @@ import { TarefaListaComponent } from './components/tarefa-lista/tarefa-lista.com
 import { TarefaFormComponent } from './components/tarefa-form/tarefa-form.component';
 import { TarefaDetalhesComponent } from './components/tarefa-detalhes/tarefa-detalhes.component';
 import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,18 +17,22 @@ export const routes: Routes = [
   },
   {
     path: 'tasks',
-    component: TarefaListaComponent
+    component: TarefaListaComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'tasks/new',
-    component: TarefaFormComponent
+    component: TarefaFormComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'tasks/:id',
-    component: TarefaDetalhesComponent
+    component: TarefaDetalhesComponent,
+    canActivate: [authGuard]
   },
   {
     path: 'tasks/:id/edit',
-    component: TarefaFormComponent
+    component: TarefaFormComponent,
+    canActivate: [authGuard]
   }
 ];
