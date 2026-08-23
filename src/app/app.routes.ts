@@ -1,28 +1,38 @@
 import { Routes } from '@angular/router';
-import { EventoListaComponent } from './components/evento-lista/evento-lista.component';
-import { EventoFormComponent } from './components/evento-form/evento-form.component';
-import { EventoDetalhesComponent } from './components/evento-detalhes/evento-detalhes.component';
+import { TarefaListaComponent } from './components/tarefa-lista/tarefa-lista.component';
+import { TarefaFormComponent } from './components/tarefa-form/tarefa-form.component';
+import { TarefaDetalhesComponent } from './components/tarefa-detalhes/tarefa-detalhes.component';
+import { LoginComponent } from './components/login/login.component';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'events',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'events',
-    component: EventoListaComponent
+    path: 'login',
+    component: LoginComponent
   },
   {
-    path: 'events/new',
-    component: EventoFormComponent
+    path: 'tasks',
+    component: TarefaListaComponent,
+    canActivate: [authGuard]
   },
   {
-    path: 'events/:id',
-    component: EventoDetalhesComponent
+    path: 'tasks/new',
+    component: TarefaFormComponent,
+    canActivate: [authGuard]
   },
   {
-    path: 'events/:id/edit',
-    component: EventoFormComponent
+    path: 'tasks/:id',
+    component: TarefaDetalhesComponent,
+    canActivate: [authGuard]
+  },
+  {
+    path: 'tasks/:id/edit',
+    component: TarefaFormComponent,
+    canActivate: [authGuard]
   }
 ];

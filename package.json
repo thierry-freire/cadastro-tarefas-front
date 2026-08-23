@@ -1,6 +1,6 @@
 {
-  "name": "desafio-petrobras-front-end",
-  "version": "0.0.0",
+  "name": "cadastro-tarefas-front",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

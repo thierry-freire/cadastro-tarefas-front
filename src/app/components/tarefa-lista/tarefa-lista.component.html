@@ -1,0 +1,74 @@
+<section class="page-shell">
+  <mat-card class="hero-card">
+    <mat-toolbar color="primary" class="toolbar">
+      <div class="side"></div>
+      <span>Gestão de Tarefas</span>
+      <div class="side">
+        <button mat-flat-button color="accent" routerLink="/tasks/new">
+          <mat-icon>add</mat-icon>
+          Nova tarefa
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <div class="content-card">
+      <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
+        <mat-spinner diameter="32"></mat-spinner>
+        <span>Carregando tarefas...</span>
+      </div>
+
+      <div *ngIf="!loading" class="filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(value)]="status">
+            <mat-option [value]="">---</mat-option>
+            <mat-option value="PENDENTE">Pendente</mat-option>
+            <mat-option value="EM_ANDAMENTO">Em andamento</mat-option>
+            <mat-option value="CONCLUIDA">Concluída</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Responsável</mat-label>
+          <input matInput [value]="responsavel" (input)="responsavel = $any($event.target).value" maxlength="100" />
+        </mat-form-field>
+
+        <div class="side">
+          <button mat-flat-button color="accent" (click)="loadTarefas()">
+            <mat-icon>search</mat-icon>
+            Buscar
+          </button>
+        </div>
+      </div>
+
+
+      <div *ngIf="!loading && tarefas.length === 0" class="empty-state">
+        <mat-icon>event_available</mat-icon>
+        <p>Nenhuma tarefa cadastrada ainda.</p>
+      </div>
+
+      <div *ngIf="!loading && tarefas.length > 0" class="event-list">
+        <mat-card *ngFor="let tarefa of tarefas" class="event-card">
+          <div class="event-info">
+            <h3>{{ tarefa.titulo }}</h3>
+            <p>{{ tarefa.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</p>
+          </div>
+          <div class="card-actions">
+            <a mat-stroked-button color="primary" [routerLink]="['/tasks', tarefa.id]">Detalhes</a>
+            <a mat-stroked-button color="accent" [routerLink]="['/tasks', tarefa.id, 'edit']">Editar</a>
+            <button mat-flat-button color="warn" type="button" (click)="deleteTarefa(tarefa.id)">Excluir</button>
+          </div>
+        </mat-card>
+      </div>
+
+      <div class="pagination">
+        <button mat-stroked-button (click)="changePage(-1)" [disabled]="page === 0">Anterior</button>
+        <span>Página {{ page + 1 }} de {{ totalPages }}</span>
+        <button mat-stroked-button (click)="changePage(1)" [disabled]="page + 1 >= totalPages">Próxima</button>
+      </div>
+
+      <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+      <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+    </div>
+  </mat-card>
+</section>

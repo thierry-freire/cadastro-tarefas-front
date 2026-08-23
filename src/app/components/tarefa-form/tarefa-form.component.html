@@ -1,0 +1,65 @@
+<section class="page-shell">
+  <mat-card class="form-card">
+    <div class="form-header">
+      <div>
+        <h1>{{ isEditing ? 'Editar tarefa' : 'Cadastrar tarefa' }}</h1>
+        <p>{{ isEditing ? 'Atualize os dados da tarefa.' : 'Preencha os dados para criar uma nova tarefa.' }}</p>
+      </div>
+      <button mat-stroked-button color="primary" routerLink="/tasks">
+        <mat-icon>arrow_back</mat-icon>
+        Voltar
+      </button>
+    </div>
+
+    <div *ngIf="loading" class="loading-state" role="status" aria-live="polite">
+      <mat-spinner diameter="28"></mat-spinner>
+      <span>{{ isEditing ? 'Carregando tarefa...' : 'Salvando tarefa...' }}</span>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="event-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="titulo" maxlength="100" required />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Descrição</mat-label>
+        <textarea matInput formControlName="descricao" rows="4" maxlength="1000"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option [value]="">---</mat-option>
+          <mat-option value="PENDENTE">Pendente</mat-option>
+          <mat-option value="EM_ANDAMENTO">Em andamento</mat-option>
+          <mat-option value="CONCLUIDA">Concluída</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de criação</mat-label>
+        <input matInput type="datetime-local" formControlName="dataCriacao" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Data de conclusão</mat-label>
+        <input matInput type="datetime-local" formControlName="dataConclusao" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Responsável</mat-label>
+        <input matInput formControlName="responsavel" maxlength="200" required />
+      </mat-form-field>
+
+      <div class="actions">
+        <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+          {{ isEditing ? 'Salvar alterações' : 'Cadastrar tarefa' }}
+        </button>
+      </div>
+    </form>
+
+    <div class="feedback feedback-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</div>
+    <div class="feedback feedback-success" *ngIf="successMessage" role="status">{{ successMessage }}</div>
+  </mat-card>
+</section>

@@ -1,0 +1,42 @@
+<main class="login-page">
+  <mat-card class="login-card">
+    <div class="brand-mark" aria-hidden="true">
+      <mat-icon>task_alt</mat-icon>
+    </div>
+
+    <div class="login-heading">
+      <p class="eyebrow">Gestão de tarefas</p>
+      <h1>Bem-vindo de volta</h1>
+      <p>Entre para acompanhar suas tarefas.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <mat-form-field appearance="outline">
+        <mat-label>Usuário</mat-label>
+        <mat-icon matPrefix>person_outline</mat-icon>
+        <input matInput formControlName="username" autocomplete="username" />
+        <mat-error *ngIf="form.controls['username'].hasError('required')">
+          Informe seu usuário.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Senha</mat-label>
+        <mat-icon matPrefix>lock_outline</mat-icon>
+        <input matInput type="password" formControlName="password" autocomplete="current-password" />
+        <mat-error *ngIf="form.controls['password'].hasError('required')">
+          Informe sua senha.
+        </mat-error>
+      </mat-form-field>
+
+      <div *ngIf="errorMessage" class="feedback feedback-error" role="alert">
+        {{ errorMessage }}
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" [disabled]="loading">
+        <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        <span>{{ loading ? 'Entrando...' : 'Entrar' }}</span>
+      </button>
+    </form>
+  </mat-card>
+</main>

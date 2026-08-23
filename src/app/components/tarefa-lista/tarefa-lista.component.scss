@@ -34,6 +34,16 @@
   gap: 1rem;
 }
 
+.filters {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters mat-form-field {
+  flex: 1 1 220px;
+}
+
 .event-card {
   display: flex;
   justify-content: space-between;

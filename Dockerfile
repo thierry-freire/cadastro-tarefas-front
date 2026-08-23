@@ -22,7 +22,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
 
-COPY --from=build /app/dist/desafio-petrobras-front-end/browser/ /usr/share/nginx/html/
+COPY --from=build /app/dist/cadastro-tarefas-front/browser/ /usr/share/nginx/html/
 
 EXPOSE 80
 

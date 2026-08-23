@@ -6,26 +6,26 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { EventoService } from '../../services/evento.service';
-import { Evento } from '../../models/evento';
+import { TarefaService } from '../../services/tarefa.service';
+import { Tarefa } from '../../models/tarefa';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-evento-detalhes',
+  selector: 'app-tarefa-detalhes',
   standalone: true,
   imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatChipsModule, MatIconModule, MatProgressSpinnerModule, MatToolbarModule],
-  templateUrl: './evento-detalhes.component.html',
-  styleUrl: './evento-detalhes.component.scss',
+  templateUrl: './tarefa-detalhes.component.html',
+  styleUrl: './tarefa-detalhes.component.scss',
   providers: [DatePipe]
 })
-export class EventoDetalhesComponent implements OnInit {
-  evento?: Evento;
+export class TarefaDetalhesComponent implements OnInit {
+  tarefa?: Tarefa;
   loading = false;
   errorMessage = '';
   successMessage = '';
 
   constructor(
-    private eventoService: EventoService,
+    private tarefaService: TarefaService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -33,45 +33,45 @@ export class EventoDetalhesComponent implements OnInit {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.loadEvento(Number(id));
+      this.loadTarefa(Number(id));
     } else {
-      this.errorMessage = 'Evento não encontrado.';
+      this.errorMessage = 'Tarefa não encontrada.';
     }
   }
 
-  deleteEvento(id?: number): void {
+  deleteTarefa(id?: number): void {
     if (!id) {
       return;
     }
 
-    if (!confirm('Deseja realmente excluir este evento?')) {
+    if (!confirm('Deseja realmente excluir esta tarefa?')) {
       return;
     }
 
     this.loading = true;
-    this.eventoService.delete(id).subscribe({
+    this.tarefaService.delete(id).subscribe({
       next: () => {
-        this.successMessage = 'Evento removido com sucesso.';
+        this.successMessage = 'Tarefa removida com sucesso.';
         this.router.navigate(['/'], { queryParams: { success: this.successMessage } });
       },
       error: () => {
-        this.errorMessage = 'Não foi possível remover o evento.';
+        this.errorMessage = 'Não foi possível remover a tarefa.';
         this.loading = false;
       }
     });
   }
 
-  private loadEvento(id: number): void {
+  private loadTarefa(id: number): void {
     this.loading = true;
     this.errorMessage = '';
 
-    this.eventoService.getById(id).subscribe({
-      next: (evento) => {
-        this.evento = evento;
+    this.tarefaService.getById(id).subscribe({
+      next: (tarefa) => {
+        this.tarefa = tarefa;
         this.loading = false;
       },
       error: () => {
-        this.errorMessage = 'Não foi possível carregar os detalhes do evento.';
+        this.errorMessage = 'Não foi possível carregar os detalhes da tarefa.';
         this.loading = false;
       }
     });
