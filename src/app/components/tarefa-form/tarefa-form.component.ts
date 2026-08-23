@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -16,7 +17,7 @@ import { ErroResponse } from '../../models/tarefa';
 @Component({
   selector: 'app-tarefa-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule, MatButtonModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatIconModule, MatSnackBarModule],
   templateUrl: './tarefa-form.component.html',
   styleUrl: './tarefa-form.component.scss'
 })
@@ -38,9 +39,11 @@ export class TarefaFormComponent implements OnInit {
     this.form = this.fb.group({
       id: [null],
       titulo: ['', Validators.required],
-      descricao: ['', Validators.required],
-      data: ['', Validators.required],
-      local: ['', Validators.required]
+      descricao: [''],
+      status: ['', Validators.required],
+      dataCriacao: [{ value: this.formatDateForInput(new Date()), disabled: true }, Validators.required],
+      dataConclusao: [''],
+      responsavel: ['', Validators.required]
     });
 
     const id = this.route.snapshot.paramMap.get('id');
@@ -61,7 +64,7 @@ export class TarefaFormComponent implements OnInit {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const tarefa: Tarefa = this.form.value;
+    const tarefa: Tarefa = this.form.getRawValue();
     const request = this.isEditing && tarefa.id != null
       ? this.tarefaService.update(tarefa.id, tarefa)
       : this.tarefaService.create(tarefa);
@@ -88,7 +91,8 @@ export class TarefaFormComponent implements OnInit {
       next: (tarefa) => {
         this.form.patchValue({
           ...tarefa,
-          data: this.formatDateForInput(tarefa.dataCriacao.toString())
+          dataCriacao: this.formatDateForInput(tarefa.dataCriacao),
+          dataConclusao: this.formatDateForInput(tarefa.dataConclusao)
         });
         this.loading = false;
       },
@@ -99,12 +103,17 @@ export class TarefaFormComponent implements OnInit {
     });
   }
 
-  private formatDateForInput(value: string): string {
+  private formatDateForInput(value: string | Date): string {
     if (!value) {
       return '';
     }
 
     const date = new Date(value);
-    return date.toISOString().slice(0, 16);
+    if (Number.isNaN(date.getTime())) {
+      return '';
+    }
+
+    const pad = (part: number): string => part.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
   }
 }

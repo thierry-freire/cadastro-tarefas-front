@@ -5,7 +5,7 @@
         <h1>Detalhes da tarefa</h1>
         <p>Veja as informações completas da tarefa selecionada.</p>
       </div>
-      <button mat-flat-button color="accent" routerLink="/events">
+      <button mat-flat-button color="accent" routerLink="/tasks">
         <mat-icon>arrow_back</mat-icon>
         Voltar
       </button>
@@ -25,11 +25,11 @@
 
       <mat-chip-set>
         <mat-chip>{{ tarefa.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
-        <mat-chip>{{ tarefa.dataConclusao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
+        <mat-chip *ngIf="tarefa.dataConclusao">{{ tarefa.dataConclusao | date:'dd/MM/yyyy HH:mm' }}</mat-chip>
       </mat-chip-set>
 
       <div class="actions">
-        <a mat-flat-button color="primary" [routerLink]="['/events', tarefa.id, 'edit']">
+        <a mat-flat-button color="primary" [routerLink]="['/tasks', tarefa.id, 'edit']">
           <mat-icon>edit</mat-icon>
           Editar
         </a>

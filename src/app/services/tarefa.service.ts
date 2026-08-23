@@ -13,27 +13,31 @@ export class TarefaService {
 
   private getApiUrl(): string {
     const envApiUrl = (window as any)?.__ENV__?.API_URL;
-    return envApiUrl || 'http://localhost:8080/api/events';
+    return envApiUrl || 'http://localhost:8080';
   }
 
-  list(page: number = 0, size: number = 10): Observable<TarefaPageResponse> {
-    const params = new HttpParams().set('page', page.toString()).set('size', size.toString());
-    return this.http.get<TarefaPageResponse>(this.apiUrl, { params });
+  list(page: number = 0, size: number = 10, status?: string, responsavel?: string): Observable<TarefaPageResponse> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString())
+      .set('status', status || '')
+      .set('responsavel', responsavel || '');
+    return this.http.get<TarefaPageResponse>(`${this.apiUrl}/api/tasks`, { params });
   }
 
   getById(id: number): Observable<Tarefa> {
-    return this.http.get<Tarefa>(`${this.apiUrl}/${id}`);
+    return this.http.get<Tarefa>(`${this.apiUrl}/api/tasks/${id}`);
   }
 
   create(tarefa: Tarefa): Observable<any> {
-    return this.http.post(this.apiUrl, tarefa);
+    return this.http.post(`${this.apiUrl}/api/tasks`, tarefa);
   }
 
   update(id: number, tarefa: Tarefa): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, tarefa);
+    return this.http.put(`${this.apiUrl}/api/tasks/${id}`, tarefa);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/api/tasks/${id}`);
   }
 }

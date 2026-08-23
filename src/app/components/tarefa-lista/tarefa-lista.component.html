@@ -17,6 +17,31 @@
         <span>Carregando tarefas...</span>
       </div>
 
+      <div *ngIf="!loading" class="filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [(value)]="status">
+            <mat-option [value]="">---</mat-option>
+            <mat-option value="PENDENTE">Pendente</mat-option>
+            <mat-option value="EM_ANDAMENTO">Em andamento</mat-option>
+            <mat-option value="CONCLUIDA">Concluída</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Responsável</mat-label>
+          <input matInput [value]="responsavel" (input)="responsavel = $any($event.target).value" maxlength="100" />
+        </mat-form-field>
+
+        <div class="side">
+          <button mat-flat-button color="accent" (click)="loadTarefas()">
+            <mat-icon>search</mat-icon>
+            Buscar
+          </button>
+        </div>
+      </div>
+
+
       <div *ngIf="!loading && tarefas.length === 0" class="empty-state">
         <mat-icon>event_available</mat-icon>
         <p>Nenhuma tarefa cadastrada ainda.</p>

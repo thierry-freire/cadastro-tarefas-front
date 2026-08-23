@@ -21,4 +21,5 @@ export interface ErroResponse {
   message: string;
   error: string;
   status: number;
+  timestamp: Date;
 }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -9,11 +12,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { TarefaService } from '../../services/tarefa.service';
 import { Tarefa } from '../../models/tarefa';
+import { MatOption } from "@angular/material/core";
 
 @Component({
   selector: 'app-tarefa-lista',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatChipsModule],
+  imports: [CommonModule, RouterModule, MatButtonModule, MatCardModule, MatSelectModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, MatToolbarModule, MatIconModule, MatChipsModule, MatOption],
   templateUrl: './tarefa-lista.component.html',
   styleUrl: './tarefa-lista.component.scss'
 })
@@ -26,6 +30,8 @@ export class TarefaListaComponent implements OnInit {
   pageSize = 5;
   totalPages = 0;
   totalElements = 0;
+  status: string = '';
+  responsavel: string = '';
 
   constructor(
     private tarefaService: TarefaService,
@@ -46,7 +52,7 @@ export class TarefaListaComponent implements OnInit {
   loadTarefas(): void {
     this.loading = true;
     this.errorMessage = '';
-    this.tarefaService.list(this.page, this.pageSize).subscribe({
+    this.tarefaService.list(this.page, this.pageSize, this.status, this.responsavel).subscribe({
       next: (response) => {
         this.tarefas = response.content;
         this.totalElements = response.totalElements;
